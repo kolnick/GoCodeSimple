@@ -1,0 +1,7 @@
+server: example.com
+port: 8080
+database:
+  host: localhost
+  name: mydb
+  user: myuser
+  password: mypassword

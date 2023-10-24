@@ -34,3 +34,8 @@ func TestAnonymousField(t *testing.T) {
 	user := User{"kolnick", 'm', 35, 177.5}
 	fmt.Println(user)
 }
+
+func TestPrint(t *testing.T) {
+	student := Student{"kolnick", 21}
+	fmt.Println(student)
+}

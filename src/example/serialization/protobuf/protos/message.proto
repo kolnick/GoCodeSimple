@@ -1,5 +1,6 @@
 syntax = "proto3";
-
+option go_package = "./";
+package  protobuf;
 
 message User {
   int32 id = 1;

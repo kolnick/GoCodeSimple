@@ -2,6 +2,8 @@ package goruttine
 
 import (
 	"fmt"
+	"math"
+	"sync"
 	"testing"
 	"time"
 )
@@ -41,4 +43,17 @@ func printLetter() {
 		time.Sleep(400 * time.Millisecond)
 		fmt.Printf("%c \n", i)
 	}
+}
+
+func TestSoMuchGo(t *testing.T) {
+	var wg sync.WaitGroup
+	for i := 0; i < math.MaxInt32; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			fmt.Println(i)
+			time.Sleep(time.Second)
+		}(i)
+	}
+	wg.Wait()
 }

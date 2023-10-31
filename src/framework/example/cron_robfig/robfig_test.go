@@ -1,6 +1,6 @@
 package cron_robfig
 
-//https://cron.qqe2.com/  cron web
+//https://cron.qqe2.com/  cron net
 
 // https://github.com/robfig/cron
 import (

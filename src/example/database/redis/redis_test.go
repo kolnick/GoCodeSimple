@@ -13,7 +13,8 @@ var ctx = context.Background()
 
 func init() {
 	client = *redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
+		Addr: "192.168.1.5:6379",
+		//		Addr: "localhost:6379",
 	})
 }
 

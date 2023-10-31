@@ -21,3 +21,9 @@ func TestDate(t *testing.T) {
 	format := now.Format(time.UnixDate)
 	fmt.Println(format)
 }
+
+func TestTemplateFormat(t *testing.T) {
+	template := "20060102"
+	format := time.Now().Format(template)
+	fmt.Println(format)
+}

@@ -30,6 +30,27 @@ type User struct {
 	Email    string `json:"email" validate:"email"`
 }
 
+func (user User) SetName(name string) {
+	user.Username = name
+}
+func (user User) SetEmail(email string) {
+	user.Email = email
+}
+
+func TestGetFunc(d *testing.T) {
+	user := &User{
+		Username: "john_doe",
+		Email:    "john_doe@example.com",
+	}
+	t := reflect.TypeOf(user)
+	methodNum := t.NumMethod()
+	for i := 0; i < methodNum; i++ {
+		method := t.Method(i)
+		fmt.Println("Method:", method.Name)
+	}
+	fmt.Println(methodNum)
+}
+
 func TestGetAllFlags(d *testing.T) {
 	user := User{
 		Username: "john_doe",

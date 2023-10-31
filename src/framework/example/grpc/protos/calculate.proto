@@ -1,0 +1,15 @@
+syntax = "proto3";
+option go_package = "./";
+package  grpc;
+service Calculator {
+  rpc Add (Request) returns (Response);
+}
+
+message Request {
+  int32 a = 1;
+  int32 b = 2;
+}
+
+message Response {
+  int32 result = 1;
+}

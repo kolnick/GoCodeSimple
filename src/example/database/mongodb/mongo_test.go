@@ -46,6 +46,13 @@ func initLocalMongoDB() {
 	// 连接到MongoDB
 	client, _ = mongo.Connect(context.Background(), clientOptions)
 }
+func closeMongoDb() {
+	defer func() {
+		if err := client.Disconnect(context.Background()); err != nil {
+			panic(err)
+		}
+	}()
+}
 
 func TestGetCollection(t *testing.T) {
 	client.Database("db").Collection("persons")
@@ -64,7 +71,22 @@ func TestInsertCollection(t *testing.T) {
 			log.Fatal(err)
 		}
 	}
+}
 
+func TestBatchInset(t *testing.T) {
+	initLocalMongoDB()
+	defer closeMongoDb()
+	collection := client.Database("db").Collection("persons")
+
+	var documents []interface{}
+	for i := 0; i < 5; i++ {
+		documents = append(documents, Persons{Name: fmt.Sprintf("kolnick %d", i+1)})
+	}
+	result, err := collection.InsertMany(context.Background(), documents)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Inserted documents with IDs:", result.InsertedIDs)
 }
 
 func TestFindCollection(t *testing.T) {
@@ -73,6 +95,10 @@ func TestFindCollection(t *testing.T) {
 	collection := client.Database("db").Collection("persons")
 	filter := bson.D{{"age", bson.D{{"$gte", 20}, {"$lte", 23}}}}
 	cur, err := collection.Find(context.Background(), filter)
+	forEachCollection(err, cur)
+}
+
+func forEachCollection(err error, cur *mongo.Cursor) {
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -109,10 +135,15 @@ func TestRemoveCollection(t *testing.T) {
 	collection.DeleteMany(context.Background(), filter)
 }
 
-func closeMongoDb() {
-	defer func() {
-		if err := client.Disconnect(context.Background()); err != nil {
-			panic(err)
-		}
-	}()
+func TestLike(t *testing.T) {
+	initLocalMongoDB()
+	defer closeMongoDb()
+	collection := client.Database("db").Collection("persons")
+	filter := bson.M{"name": bson.M{"$regex": "^kolnick"}}
+	cur, err := collection.Find(context.Background(), filter)
+	forEachCollection(err, cur)
+}
+
+func TestReplaceOne(t *testing.T) {
+
 }

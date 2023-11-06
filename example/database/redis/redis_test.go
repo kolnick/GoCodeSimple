@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/go-redis/redis/v8"
+	"log"
 	"testing"
 	"time"
 )
@@ -75,4 +76,37 @@ func TestGeyKeyExpiry(t *testing.T) {
 	} else {
 		fmt.Println("key_expiry:", val_expiry)
 	}
+}
+
+func TestPubSub(t *testing.T) {
+
+	// 创建一个订阅者
+	sub := client.Subscribe(context.Background(), "channel_name")
+	defer sub.Close()
+
+	// 检查是否成功订阅
+	_, err := sub.Receive(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 启动一个 goroutine 来处理订阅的消息
+	go func() {
+		for {
+			msg, err := sub.ReceiveMessage(context.Background())
+			if err != nil {
+				log.Fatal(err)
+			}
+			fmt.Printf("Received message: %s\n", msg.Payload)
+		}
+	}()
+
+	// 发布消息
+	err = client.Publish(context.Background(), "channel_name", "Hello, Redis Pub/Sub!").Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 等待一段时间以便让订阅者接收消息
+	time.Sleep(1 * time.Second)
 }

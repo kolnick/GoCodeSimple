@@ -1,7 +1,7 @@
 package grpc
 
 import (
-	pb "GoCodeSimple/src/framework/example/grpc/protos"
+	"GoCodeSimple/framework/example/grpc/protos"
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
@@ -10,12 +10,12 @@ import (
 )
 
 type server struct {
-	pb.CalculatorServer
+	__.CalculatorServer
 }
 
-func (s *server) Add(ctx context.Context, req *pb.Request) (*pb.Response, error) {
+func (s *server) Add(ctx context.Context, req *__.Request) (*__.Response, error) {
 	result := req.A + req.B
-	return &pb.Response{Result: result}, nil
+	return &__.Response{Result: result}, nil
 }
 
 func TestServer(t *testing.T) {
@@ -25,7 +25,7 @@ func TestServer(t *testing.T) {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterCalculatorServer(s, &server{})
+	__.RegisterCalculatorServer(s, &server{})
 
 	fmt.Println("Server is running on port 1234")
 	if err := s.Serve(lis); err != nil {
@@ -40,9 +40,9 @@ func TestGrpcClient(t *testing.T) {
 	}
 	defer conn.Close()
 
-	client := pb.NewCalculatorClient(conn)
+	client := __.NewCalculatorClient(conn)
 
-	req := &pb.Request{A: 10, B: 20}
+	req := &__.Request{A: 10, B: 20}
 	resp, err := client.Add(context.Background(), req)
 	if err != nil {
 		panic(err)

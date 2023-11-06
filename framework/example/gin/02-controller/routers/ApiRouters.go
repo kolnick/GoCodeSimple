@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"GoCodeSimple/src/framework/example/gin/02-controller/controllers"
+	"GoCodeSimple/framework/example/gin/02-controller/controllers"
 	"github.com/gin-gonic/gin"
 )
 

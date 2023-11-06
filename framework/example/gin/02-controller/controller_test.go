@@ -1,7 +1,7 @@
-package _1_router
+package _2_controller
 
 import (
-	routers2 "GoCodeSimple/src/framework/example/gin/01-router/routers"
+	routers2 "GoCodeSimple/framework/example/gin/02-controller/routers"
 	"github.com/gin-gonic/gin"
 	"testing"
 )

@@ -124,7 +124,7 @@ func (m *AOIManager) GetPIDsByPos(x, y float32) (playerIDs []int) {
 	return
 }
 
-//通过gid获取当前格子的全部PlayerId
+// 通过gid获取当前格子的全部PlayerId
 func (m *AOIManager) GetPLayerIdsByGid(gid int) (playerIds []int) {
 	return m.grids[gid].getPlayerIDs()
 }

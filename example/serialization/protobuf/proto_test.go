@@ -1,7 +1,7 @@
 package protobuf
 
 import (
-	protos "GoCodeSimple/src/example/serialization/protobuf/protos"
+	protos "GoCodeSimple/example/serialization/protobuf/protos"
 	"fmt"
 	"google.golang.org/protobuf/proto"
 	"log"

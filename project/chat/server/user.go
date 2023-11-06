@@ -47,7 +47,7 @@ func (this *User) Offline() {
 	this.server.mapLock.Unlock()
 }
 
-//给当前User对应的客户端发送消息
+// 给当前User对应的客户端发送消息
 func (this *User) sendMsg(msg string) {
 	this.conn.Write([]byte(msg))
 }
